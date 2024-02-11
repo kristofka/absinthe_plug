@@ -8,3 +8,5 @@ erl_crash.dump
 .tool-versions
 .elixir_ls
 priv/plts
+/.idea
+*.iml

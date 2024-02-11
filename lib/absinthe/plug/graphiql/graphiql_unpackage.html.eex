@@ -1,0 +1,140 @@
+<!--
+The request to this GraphQL server provided the header "Accept: text/html"
+and as a result has been presented GraphiQL - an in-browser IDE for
+exploring GraphQL.
+If you wish to receive JSON, provide the header "Accept: application/json" or
+add "&raw" to the end of the URL within a browser.
+-->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <title>GraphiQL</title>
+  
+  <style>
+    html, body {
+      height: 100%;
+      margin: 0;
+      overflow: hidden;
+      width: 100%;
+    }
+
+    #root {
+      height: 100vh;
+    }
+  </style>
+  <script
+          crossorigin
+          src="https://unpkg.com/react@18/umd/react.development.js"
+  ></script>
+  <script
+          crossorigin
+          src="https://unpkg.com/react-dom@18/umd/react-dom.development.js"
+  ></script>
+  <!--
+    These two files can be found in the npm module, however you may wish to
+    copy them directly into your environment, or perhaps include them in your
+    favored resource bundler.
+   -->
+  <script
+          src="https://unpkg.com/graphiql/graphiql.min.js"
+          type="application/javascript"
+  ></script>
+  <link rel="stylesheet" href="https://unpkg.com/graphiql/graphiql.min.css" />
+  <!--
+    These are imports for the GraphIQL Explorer plugin.
+   -->
+  <script
+          src="https://unpkg.com/@graphiql/plugin-explorer/dist/index.umd.js"
+          crossorigin
+  ></script>
+  <link
+          rel="stylesheet"
+          href="https://unpkg.com/@graphiql/plugin-explorer/dist/style.css"
+  />
+</head>
+<body>
+  <div id="root"></div>
+  <!--
+  <script src="<%= assets["@absinthe/socket-graphiql/socket-graphiql.js"] %>"></script>
+    -->
+  <script>
+    // // Collect the URL parameters
+    // let parameters = {};
+    // window.location.search.substring(1).split('&').forEach(function (entry) {
+    //   let eq = entry.indexOf('=');
+    //   if (eq >= 0) {
+    //     parameters[decodeURIComponent(entry.slice(0, eq))] =
+    //       decodeURIComponent(entry.slice(eq + 1));
+    //   }
+    // });
+    // // Produce a Location query string from a parameter object.
+    // function locationQuery(params) {
+    //   return '?' + Object.keys(params).map(function (key) {
+    //     return encodeURIComponent(key) + '=' +
+    //       encodeURIComponent(params[key]);
+    //   }).join('&');
+    // }
+    // // Derive a fetch URL from the current URL, sans the GraphQL parameters.
+    // var graphqlParamNames = {
+    //   query: true,
+    //   variables: true,
+    //   operationName: true
+    // };
+    // var otherParams = {};
+    // for (var k in parameters) {
+    //   if (parameters.hasOwnProperty(k) && graphqlParamNames[k] !== true) {
+    //     otherParams[k] = parameters[k];
+    //   }
+    // }
+    //
+    // var fetchURL = locationQuery(otherParams);
+    // var protocol = window.location.protocol === "https:" ? "wss:" : "ws:";
+    // var wsUrl = <%= if socket_url do %> <%= socket_url %><% else %>'ws://localhost:4000/socket'<% end %>;
+    //
+    // var subscriptionsClient = new AbsintheSocketGraphiql.SubscriptionsClient(wsUrl, {});
+    // var fetcher = AbsintheSocketGraphiql.createFetcher(fetchURL, subscriptionsClient, 'Your subscription data will appear here after server publication!');
+    //
+    // // When the query and variables string is edited, update the URL bar so
+    // // that it can be easily shared.
+    // function onEditQuery(newQuery) {
+    //   parameters.query = newQuery;
+    //   updateURL();
+    // }
+    // function onEditVariables(newVariables) {
+    //   parameters.variables = newVariables;
+    //   updateURL();
+    // }
+    // function updateURL() {
+    //   history.replaceState(null, null, locationQuery(parameters));
+    // }
+    // // Render <GraphiQL />
+    // ReactDOM.render(
+    //   React.createElement(GraphiQL, {
+    //     fetcher,
+    //     onEditQuery: onEditQuery,
+    //     onEditVariables: onEditVariables,
+    //     query: '<%= query_string %>',
+    //     response: '<%= result_string %>',
+    //     variables: '<%= variables_string %>',
+    //   }),
+    //   document.getElementById("root")
+    // );
+    const root = ReactDOM.createRoot(document.getElementById('root'));
+    const fetcher = GraphiQL.createFetcher({
+      url: 'http://localhost:4000/api',
+      headers: { 'X-Example-Header': 'foo' },
+    });
+    const explorerPlugin = GraphiQLPluginExplorer.explorerPlugin();
+    root.render(
+            React.createElement(GraphiQL, {
+              fetcher,
+              defaultEditorToolsVisibility: true,
+              plugins: [explorerPlugin],
+            }),
+    );
+  </script>
+</body>
+</html>

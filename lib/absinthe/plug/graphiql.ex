@@ -138,6 +138,13 @@ defmodule Absinthe.Plug.GraphiQL do
 
   EEx.function_from_file(
     :defp,
+    :graphiql_unpackage,
+    Path.join(@graphiql_template_path, "graphiql_unpackage.html.eex"),
+    [:query_string, :variables_string, :result_string, :socket_url, :assets]
+  )
+
+  EEx.function_from_file(
+    :defp,
     :graphiql_workspace_html,
     Path.join(@graphiql_template_path, "graphiql_workspace.html.eex"),
     [:query_string, :variables_string, :default_headers, :default_url, :socket_url, :assets]
@@ -342,7 +349,7 @@ defmodule Absinthe.Plug.GraphiQL do
   defp render_interface(conn, :simple, opts) do
     opts = opts_with_default(opts)
 
-    graphiql_html(
+    graphiql_unpackage(
       opts[:query],
       opts[:var_string],
       opts[:result],
