@@ -350,6 +350,7 @@ defmodule Absinthe.Plug.GraphiQL do
     opts = opts_with_default(opts)
 
     graphiql_unpackage(
+default_url(opts[:default_url]),
       opts[:query],
       opts[:var_string],
       opts[:result],
