@@ -124,7 +124,7 @@ add "&raw" to the end of the URL within a browser.
     // );
     const root = ReactDOM.createRoot(document.getElementById('root'));
     const fetcher = GraphiQL.createFetcher({
-      url: 'http://localhost:4000/api',
+      url: <%= default_url %>,
       headers: { 'X-Example-Header': 'foo' },
     });
     const explorerPlugin = GraphiQLPluginExplorer.explorerPlugin();
